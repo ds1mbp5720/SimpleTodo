@@ -30,41 +30,30 @@ fun BasicEditText(
     modifier: Modifier,
     hint: String,
 ) {
-    Column(
+    var text by remember { mutableStateOf(TextFieldValue()) }
+    TextField(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 50.dp)
             .border(
                 width = 2.dp,
                 color = Highlight,
                 shape = RoundedCornerShape(30.dp)
+            ),
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            containerColor = Color.White
+        ),
+        shape = RoundedCornerShape(30.dp),
+        value = text,
+        onValueChange = {
+            text = it
+        },
+        textStyle = Typography.labelLarge,
+        placeholder = {
+            Text(
+                text = hint,
+                style = Typography.labelLarge
             )
-            .background(
-                color = Color.White,
-                shape = RoundedCornerShape(30.dp)
-            ),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        var text by remember { mutableStateOf(TextFieldValue()) }
-        TextField(
-            modifier = Modifier,
-            colors = TextFieldDefaults.textFieldColors(
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                containerColor = Color.White
-            ),
-            value = text,
-            onValueChange = {
-                text = it
-            },
-            textStyle = Typography.labelLarge,
-            placeholder = {
-                Text(
-                    text = hint,
-                    style = Typography.labelLarge
-                )
-            }
-        )
-    }
+        }
+    )
 }

@@ -31,7 +31,29 @@ val Typography: Typography
             fontSize = 24.sp,
             lineHeight = 16.sp,
             letterSpacing = 0.5.sp
+        ),
+        headlineLarge = TextStyle(
+            fontFamily = RobotoMedium,
+            fontWeight = FontWeight.Normal,
+            fontSize = 32.sp,
+            lineHeight = 40.sp,
+            letterSpacing = 0.5.sp
+        ),
+        headlineMedium = TextStyle(
+            fontFamily = RobotoMedium,
+            fontWeight = FontWeight.Normal,
+            fontSize = 24.sp,
+            lineHeight = 28.sp,
+            letterSpacing = 0.5.sp
+        ),
+        displayMedium = TextStyle(
+            fontFamily = RobotoBold,
+            fontWeight = FontWeight.Normal,
+            fontSize = 45.sp,
+            lineHeight = 52.sp,
+            letterSpacing = 0.5.sp
         )
+
     )
 
 val RobotoBlack = FontFamily(Font(R.font.roboto_black))
