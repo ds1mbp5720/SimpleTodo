@@ -29,10 +29,13 @@ import com.example.simpletodoapp.ui.theme.Typography
 fun BasicEditText(
     modifier: Modifier,
     hint: String,
+    preText: String = ""
 ) {
-    var text by remember { mutableStateOf(TextFieldValue()) }
+    var inputText by remember { mutableStateOf(TextFieldValue(preText)) }
     TextField(
         modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 40.dp)
             .border(
                 width = 2.dp,
                 color = Highlight,
@@ -44,9 +47,9 @@ fun BasicEditText(
             containerColor = Color.White
         ),
         shape = RoundedCornerShape(30.dp),
-        value = text,
+        value = inputText,
         onValueChange = {
-            text = it
+            inputText = it
         },
         textStyle = Typography.labelLarge,
         placeholder = {

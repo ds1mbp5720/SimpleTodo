@@ -49,7 +49,7 @@ val Typography: Typography
         displayMedium = TextStyle(
             fontFamily = RobotoBold,
             fontWeight = FontWeight.Normal,
-            fontSize = 45.sp,
+            fontSize = 38.sp,
             lineHeight = 52.sp,
             letterSpacing = 0.5.sp
         )
