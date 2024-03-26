@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">SimpleTodoApp</string>
+    <string name="str_btn_register">Register</string>
+    <string name="str_hint_name">Name</string>
+    <string name="str_hint_birthday">Birthday</string>
+    <string name="str_btn_start">Start</string>
+    <string name="str_btn_add">ADD</string>
+    <string name="str_hint_task">Task</string>
+    <string name="str_hint_date">Date</string>
+    <string name="str_title_add">ADD TASK</string>
+    <string name="str_btn_edit">EDIT</string>
+    <string name="str_title_edit">EDIT TASK</string>
+    <string name="str_list_title">TODO LIST</string>
 </resources>

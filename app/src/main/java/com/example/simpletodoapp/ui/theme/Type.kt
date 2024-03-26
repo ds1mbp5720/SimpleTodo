@@ -9,15 +9,30 @@ import androidx.compose.ui.unit.sp
 import com.example.simpletodoapp.R
 
 // Set of Material typography styles to start with
-val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+val Typography: Typography
+    get() = Typography(
+        bodyLarge = TextStyle(
+            fontFamily = RobotoLightItalic,
+            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp,
+            lineHeight = 24.sp,
+            letterSpacing = 0.5.sp
+        ),
+        bodyMedium = TextStyle(
+            fontFamily = RobotoLightItalic,
+            fontWeight = FontWeight.Normal,
+            fontSize = 14.sp,
+            lineHeight = 20.sp,
+            letterSpacing = 0.5.sp
+        ),
+        labelLarge = TextStyle(
+            fontFamily = RobotoLight,
+            fontWeight = FontWeight.Normal,
+            fontSize = 24.sp,
+            lineHeight = 16.sp,
+            letterSpacing = 0.5.sp
+        )
     )
-)
 
 val RobotoBlack = FontFamily(Font(R.font.roboto_black))
 val RobotoBlackItalic = FontFamily(Font(R.font.roboto_blackitalic))
