@@ -18,11 +18,12 @@ import com.example.simpletodoapp.ui.theme.Highlight
 @Composable
 fun RoundImage(
     modifier: Modifier,
-    imageId: Int
+    imageId: Int,
+    size: Int
 ) {
     Image(
         modifier = modifier
-            .size(180.dp)
+            .size(size.dp)
             .clip(CircleShape),
         painter = painterResource(imageId),
         contentScale = ContentScale.FillBounds,

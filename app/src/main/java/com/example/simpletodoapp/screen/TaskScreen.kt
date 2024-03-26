@@ -31,7 +31,10 @@ fun WriteTaskScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(vertical = 50.dp),
+            .padding(
+                horizontal = 40.dp,
+                vertical = 50.dp
+            ),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

@@ -25,7 +25,11 @@ fun InsertScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 100.dp,bottom = 50.dp),
+            .padding(horizontal = 40.dp)
+            .padding(
+                top = 100.dp,
+                bottom = 50.dp
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {

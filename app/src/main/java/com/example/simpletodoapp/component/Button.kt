@@ -32,7 +32,6 @@ fun BasicButton(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                horizontal = 40.dp,
                 vertical = 10.dp
             ),
         shape = RoundedCornerShape(30.dp),

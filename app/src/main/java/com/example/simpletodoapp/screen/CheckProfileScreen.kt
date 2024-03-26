@@ -25,13 +25,17 @@ fun CheckProfileScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 100.dp, bottom = 50.dp),
+            .padding(
+                top = 100.dp,
+                bottom = 50.dp
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         RoundImage(
             modifier = Modifier,
-            imageId = R.drawable.profile
+            imageId = R.drawable.profile,
+            size = 180
         )
         Column {
             BasicTextBodyLarge(

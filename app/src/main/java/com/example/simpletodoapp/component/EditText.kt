@@ -35,7 +35,6 @@ fun BasicEditText(
     TextField(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 40.dp)
             .border(
                 width = 2.dp,
                 color = Highlight,

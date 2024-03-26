@@ -32,6 +32,20 @@ val Typography: Typography
             lineHeight = 16.sp,
             letterSpacing = 0.5.sp
         ),
+        labelMedium = TextStyle(
+            fontFamily = RobotoRegular,
+            fontWeight = FontWeight.Normal,
+            fontSize = 12.sp,
+            lineHeight = 16.sp,
+            letterSpacing = 0.5.sp
+        ),
+        labelSmall = TextStyle(
+            fontFamily = RobotoRegular,
+            fontWeight = FontWeight.Normal,
+            fontSize = 11.sp,
+            lineHeight = 16.sp,
+            letterSpacing = 0.5.sp
+        ),
         headlineLarge = TextStyle(
             fontFamily = RobotoMedium,
             fontWeight = FontWeight.Normal,
@@ -53,7 +67,6 @@ val Typography: Typography
             lineHeight = 52.sp,
             letterSpacing = 0.5.sp
         )
-
     )
 
 val RobotoBlack = FontFamily(Font(R.font.roboto_black))

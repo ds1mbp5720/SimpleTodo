@@ -16,7 +16,7 @@ fun BasicTextTitle(
 ) {
     Text(
         modifier = modifier
-            .padding(start = 50.dp),
+            .padding(start = 10.dp),
         text = text,
         textAlign = TextAlign.Start,
         style = Typography.displayMedium,
@@ -47,6 +47,20 @@ fun BasicTextBodyMedium(
         text = text,
         textAlign = TextAlign.Center,
         style = Typography.headlineMedium,
+        color = Color.Gray
+    )
+}
+
+@Composable
+fun BasicTextBodySmall(
+    modifier: Modifier,
+    text: String
+) {
+    Text(
+        modifier = modifier,
+        text = text,
+        textAlign = TextAlign.Center,
+        style = Typography.labelSmall,
         color = Color.Gray
     )
 }
