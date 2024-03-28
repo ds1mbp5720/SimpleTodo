@@ -1,7 +1,6 @@
 package com.example.simpletodoapp.screen
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simpletodoapp.R
 import com.example.simpletodoapp.component.BasicButton
@@ -20,7 +18,7 @@ import com.example.simpletodoapp.component.RoundIconButton
 
 @Composable
 fun InsertScreen(
-
+    onRegisterClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -37,7 +35,7 @@ fun InsertScreen(
             modifier = Modifier,
             imageId = R.drawable.photo_camera_white,
         ) {
-
+            //todo 카메라 intent 추가
         }
         Column {
             BasicEditText(
@@ -54,13 +52,7 @@ fun InsertScreen(
             modifier = Modifier,
             text = stringResource(id = R.string.str_btn_register)
         ) {
-
+            onRegisterClick()
         }
     }
-}
-
-@Preview
-@Composable
-fun testInsertScreen() {
-    InsertScreen()
 }

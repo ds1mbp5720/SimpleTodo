@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simpletodoapp.R
 import com.example.simpletodoapp.component.BasicButton
@@ -20,7 +19,7 @@ import com.example.simpletodoapp.component.RoundImage
 
 @Composable
 fun CheckProfileScreen(
-
+    onStartClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -49,16 +48,11 @@ fun CheckProfileScreen(
             )
         }
         BasicButton(
-            modifier = Modifier,
+            modifier = Modifier
+                .padding(horizontal = 40.dp),
             text = stringResource(id = R.string.str_btn_start)
         ) {
-
+            onStartClick()
         }
     }
-}
-
-@Preview
-@Composable
-fun testCheckProfileScreen() {
-    CheckProfileScreen()
 }

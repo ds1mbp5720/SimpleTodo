@@ -21,12 +21,12 @@ import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simpletodoapp.R
 import com.example.simpletodoapp.component.BasicTextTitle
@@ -34,10 +34,12 @@ import com.example.simpletodoapp.component.RoundImage
 import com.example.simpletodoapp.component.TodoItem
 import com.example.simpletodoapp.ui.theme.Highlight
 import com.example.simpletodoapp.ui.theme.White
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
-
+    onAddTaskClick: () -> Unit,
+    onEditTaskClick: (Long) -> Unit
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -48,8 +50,7 @@ fun MainScreen(
                 shape = CircleShape,
                 containerColor = Highlight,
                 contentColor = White,
-                onClick = {
-                }
+                onClick = onAddTaskClick
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.add_white),
@@ -81,18 +82,23 @@ fun MainScreen(
                 )
             }
             Spacer(modifier = Modifier.height(20.dp))
-            TaskLazyColumn(taskList = List(20) { i -> "test" }) //todo room 값 가져오기
+            TaskLazyColumn(
+                onEditTask = onEditTaskClick,
+                onDeleteTask = {},
+                taskList = List(20) { i -> "test" } //todo room 값 가져오기
+            )
         }
-
-
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskLazyColumn(
+    onEditTask: (Long) -> Unit,
+    onDeleteTask: () -> Unit,
     taskList: List<String> //todo data class 조정
 ) {
+    val coroutine = rememberCoroutineScope()
     var alignment: Alignment = Alignment.Center
     var iconId: Int = R.drawable.edit_white
     var itemColor: Color = White
@@ -103,26 +109,48 @@ fun TaskLazyColumn(
             items = taskList,
             key = null
         ) {
-            val dismissState = rememberSwipeToDismissBoxState(positionalThreshold = { it * 0.9f })
+            val dismissState = rememberSwipeToDismissBoxState(
+                positionalThreshold = { it * 0.4f },
+                confirmValueChange = { dismissValue ->
+                    when (dismissValue) {
+                        SwipeToDismissBoxValue.StartToEnd -> {
+                            onDeleteTask.invoke()
+                            true
+                        }
 
+                        SwipeToDismissBoxValue.EndToStart -> {
+                            onEditTask.invoke(0) // todo id 값
+                            true
+                        }
+
+                        SwipeToDismissBoxValue.Settled -> {
+                            false
+                        }
+                    }
+                }
+            )
             when (dismissState.dismissDirection) {
                 SwipeToDismissBoxValue.StartToEnd -> {
                     iconId = R.drawable.task_alt_white
                     alignment = Alignment.CenterStart
                     itemColor = Highlight
-                    // todo remove
                 }
 
                 SwipeToDismissBoxValue.EndToStart -> {
                     iconId = R.drawable.edit_white
                     alignment = Alignment.CenterEnd
                     itemColor = Highlight
-                    // todo move edit screen
                 }
 
                 SwipeToDismissBoxValue.Settled -> {
                     alignment = Alignment.Center
                     itemColor = White
+                }
+            }
+            // 좌측 swipe 시 위치 원복
+            if (dismissState.currentValue == SwipeToDismissBoxValue.EndToStart) {
+                coroutine.launch {
+                    dismissState.reset()
                 }
             }
             SwipeToDismissBox(
@@ -154,10 +182,4 @@ fun TaskLazyColumn(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun testMainScreen() {
-    MainScreen()
 }

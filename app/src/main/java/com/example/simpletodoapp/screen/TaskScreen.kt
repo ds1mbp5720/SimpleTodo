@@ -1,5 +1,6 @@
 package com.example.simpletodoapp.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simpletodoapp.R
 import com.example.simpletodoapp.component.BasicButton
@@ -26,7 +26,8 @@ fun WriteTaskScreen(
     screenType: TaskScreenType,
     task: String = "",
     date: String = "",
-    modifier: Modifier
+    moveBackStack: () -> Unit,
+    @SuppressLint("ModifierParameter") modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
@@ -70,14 +71,7 @@ fun WriteTaskScreen(
             modifier = Modifier,
             text = if (screenType == TaskScreenType.ADD) stringResource(id = R.string.str_btn_add) else stringResource(id = R.string.str_btn_edit)
         ) {
-
+            moveBackStack()
         }
     }
-}
-
-@Preview
-@Composable
-fun testTaskScreen() {
-    //WriteTaskScreen(screenType = TaskScreenType.ADD, modifier = Modifier)
-    WriteTaskScreen(screenType = TaskScreenType.EDIT, task = "test task", date = "2022 / 03 / 22 pm", modifier = Modifier)
 }
