@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.simpletodoapp.R
 import com.example.simpletodoapp.component.BasicButton
+import com.example.simpletodoapp.component.BasicDatePickerButton
 import com.example.simpletodoapp.component.BasicEditText
 import com.example.simpletodoapp.component.BasicTextTitle
 
@@ -54,17 +55,22 @@ fun WriteTaskScreen(
                 } else {
                     ""
                 },
-                preText = task
+                preText = task,
+                updateText = {
+
+                }
             )
             Spacer(modifier = Modifier.height(30.dp))
-            BasicEditText(
+            BasicDatePickerButton(
                 modifier = Modifier,
                 hint = if (screenType == TaskScreenType.ADD) {
                     stringResource(id = R.string.str_hint_date)
                 } else {
-                    ""
+                    date
                 },
-                preText = date
+                updateDate = {
+
+                }
             )
         }
         BasicButton(

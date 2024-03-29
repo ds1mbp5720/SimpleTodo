@@ -124,7 +124,7 @@ fun TaskLazyColumn(
                         }
 
                         SwipeToDismissBoxValue.Settled -> {
-                            false
+                            true
                         }
                     }
                 }

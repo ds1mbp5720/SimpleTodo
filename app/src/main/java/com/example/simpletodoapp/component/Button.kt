@@ -26,24 +26,27 @@ import com.example.simpletodoapp.ui.theme.Typography
 fun BasicButton(
     modifier: Modifier,
     text: String,
+    buttonColor: Color = Highlight,
+    textColor: Color = Color.White,
+    textAlign: TextAlign = TextAlign.Center,
     clickEvent: () -> Unit
 ) {
     Button(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                vertical = 10.dp
+                vertical = 5.dp
             ),
         shape = RoundedCornerShape(30.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Highlight),
+        colors = ButtonDefaults.buttonColors(containerColor = buttonColor),
         onClick = clickEvent
     ) {
         Text(
-            modifier = Modifier,
+            modifier = Modifier.fillMaxWidth(),
             text = text,
-            textAlign = TextAlign.Center,
+            textAlign = textAlign,
             style = Typography.labelLarge,
-            color = Color.White,
+            color = textColor,
         )
     }
 }
