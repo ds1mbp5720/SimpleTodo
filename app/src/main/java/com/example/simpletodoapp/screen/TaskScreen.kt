@@ -12,6 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.domain.model.TodoModel
+import com.example.simpletodoapp.MainViewModel
 import com.example.simpletodoapp.R
 import com.example.simpletodoapp.component.BasicButton
 import com.example.simpletodoapp.component.BasicDatePickerButton
@@ -24,6 +27,7 @@ enum class TaskScreenType {
 
 @Composable
 fun WriteTaskScreen(
+    mainViewModel: MainViewModel,
     screenType: TaskScreenType,
     task: String = "",
     date: String = "",
@@ -77,6 +81,13 @@ fun WriteTaskScreen(
             modifier = Modifier,
             text = if (screenType == TaskScreenType.ADD) stringResource(id = R.string.str_btn_add) else stringResource(id = R.string.str_btn_edit)
         ) {
+            mainViewModel.insertTodo(
+                todo = TodoModel(
+                    id = 100,
+                    task = "test",
+                    date = "testDate"
+                )
+            )
             moveBackStack()
         }
     }

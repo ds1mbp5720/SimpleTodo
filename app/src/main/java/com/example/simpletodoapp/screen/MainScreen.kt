@@ -21,6 +21,7 @@ import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +29,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.domain.model.TodoModel
+import com.example.simpletodoapp.MainViewModel
 import com.example.simpletodoapp.R
 import com.example.simpletodoapp.component.BasicTextTitle
 import com.example.simpletodoapp.component.RoundImage
@@ -38,9 +42,12 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
+    mainViewModel: MainViewModel,
     onAddTaskClick: () -> Unit,
     onEditTaskClick: (Long) -> Unit
 ) {
+    mainViewModel.getTodoList()
+    val todoList = mainViewModel.todoList.observeAsState()
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
@@ -82,11 +89,14 @@ fun MainScreen(
                 )
             }
             Spacer(modifier = Modifier.height(20.dp))
-            TaskLazyColumn(
-                onEditTask = onEditTaskClick,
-                onDeleteTask = {},
-                taskList = List(20) { i -> "test" } //todo room 값 가져오기
-            )
+            todoList.value?.let { it1 ->
+                TaskLazyColumn(
+                    onEditTask = onEditTaskClick,
+                    onDeleteTask = {},
+                    taskList = it1
+                    //List(20) { i -> "test" } //todo room 값 가져오기
+                )
+            }
         }
     }
 }
@@ -96,7 +106,7 @@ fun MainScreen(
 fun TaskLazyColumn(
     onEditTask: (Long) -> Unit,
     onDeleteTask: () -> Unit,
-    taskList: List<String> //todo data class 조정
+    taskList: List<TodoModel>
 ) {
     val coroutine = rememberCoroutineScope()
     var alignment: Alignment = Alignment.Center

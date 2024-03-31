@@ -6,11 +6,12 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.data.room.entity.TodoEntity
+import io.reactivex.Single
 
 @Dao
 interface TodoDao {
     @Query("SELECT * FROM Task")
-    fun getTodoList()
+    fun getTodoList(): Single<List<TodoEntity>>
 
     @Insert
     fun insertTodo(todo: TodoEntity)
@@ -19,5 +20,5 @@ interface TodoDao {
     fun updateTodo(todo: TodoEntity)
 
     @Delete
-    fun deleteTodo()
+    fun deleteTodo(todo: TodoEntity)
 }

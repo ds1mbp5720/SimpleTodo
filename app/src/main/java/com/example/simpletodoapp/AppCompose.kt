@@ -1,6 +1,7 @@
 package com.example.simpletodoapp
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.simpletodoapp.navigation.MainDestination
@@ -16,19 +17,21 @@ import com.example.simpletodoapp.ui.theme.SimpleTodoAppTheme
 fun SimpleTodoAppCompose() {
     val mainNavController = rememberMainNavController()
     SimpleTodoAppTheme {
-        //viewModel
+        val mainViewModel: MainViewModel = viewModel()
         NavHost(
             navController = mainNavController.navController,
             startDestination = MainDestination.INSERT_USER
         ) {
             composable(MainDestination.MAIN) { from ->
                 MainScreen(
+                    mainViewModel = mainViewModel,
                     onAddTaskClick = { mainNavController.navigateToTask(from) },
                     onEditTaskClick = { mainNavController.navigateToTask(from) }
                 )
             }
             composable(MainDestination.TASK) { from ->
                 WriteTaskScreen(
+                    mainViewModel = mainViewModel,
                     screenType = TaskScreenType.EDIT,
                     task = "",
                     date = "",
