@@ -26,7 +26,12 @@ fun rememberMainNavController(
 class MainNavController(
     val navController: NavHostController
 ) {
-    fun navigateToTask(from: NavBackStackEntry) {
+    fun navigateToTaskEdit(id: Long, from: NavBackStackEntry) {
+        if (from.lifeCycleIsResume()) {
+            navController.navigate("${MainDestination.TASK}/$id")
+        }
+    }
+    fun navigateToTaskAdd(from: NavBackStackEntry) {
         if (from.lifeCycleIsResume()) {
             navController.navigate(MainDestination.TASK)
         }

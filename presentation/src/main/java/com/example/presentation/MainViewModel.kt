@@ -37,6 +37,9 @@ class MainViewModel @Inject constructor(
             todoRepository.insertTodo(todo)
         }
     }
+    fun findTodo(id: Long): TodoModel? {
+        return todoList.value?.find { it.id == id }
+    }
     fun updateTodo(todo: TodoModel) {
         viewModelScope.launch(Dispatchers.IO) {
             todoRepository.updateTodo(todo)

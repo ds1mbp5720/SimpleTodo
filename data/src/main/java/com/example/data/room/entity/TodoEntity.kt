@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Task")
 data class TodoEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    @PrimaryKey
+    val id: Long, // 입력 시간 millTime 생성 : 입력 시간 중복 불가
     val task: String,
     val date: String
 )

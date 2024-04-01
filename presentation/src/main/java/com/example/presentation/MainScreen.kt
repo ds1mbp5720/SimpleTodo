@@ -87,12 +87,14 @@ fun MainScreen(
                 )
             }
             Spacer(modifier = Modifier.height(20.dp))
-            todoList.value?.let { it1 ->
+            todoList.value?.let { todoList ->
                 TaskLazyColumn(
                     onEditTask = onEditTaskClick,
-                    onDeleteTask = {},
-                    taskList = it1
-                    //List(20) { i -> "test" } //todo room 값 가져오기
+                    onDeleteTask = { todo ->
+                        mainViewModel.deleteTodo(todo)
+                        mainViewModel.getTodoList()
+                    },
+                    todoList = todoList
                 )
             }
         }
@@ -103,8 +105,8 @@ fun MainScreen(
 @Composable
 fun TaskLazyColumn(
     onEditTask: (Long) -> Unit,
-    onDeleteTask: () -> Unit,
-    taskList: List<TodoModel>
+    onDeleteTask: (TodoModel) -> Unit,
+    todoList: List<TodoModel>
 ) {
     val coroutine = rememberCoroutineScope()
     var alignment: Alignment = Alignment.Center
@@ -114,7 +116,7 @@ fun TaskLazyColumn(
         modifier = Modifier
     ) {
         items(
-            items = taskList,
+            items = todoList,
             key = null
         ) {
             val dismissState = rememberSwipeToDismissBoxState(
@@ -122,12 +124,12 @@ fun TaskLazyColumn(
                 confirmValueChange = { dismissValue ->
                     when (dismissValue) {
                         SwipeToDismissBoxValue.StartToEnd -> {
-                            onDeleteTask.invoke()
+                            onDeleteTask.invoke(it)
                             true
                         }
 
                         SwipeToDismissBoxValue.EndToStart -> {
-                            onEditTask.invoke(0) // todo id 값
+                            onEditTask.invoke(it.id)
                             true
                         }
 
@@ -156,7 +158,7 @@ fun TaskLazyColumn(
                 }
             }
             // 좌측 swipe 시 위치 원복
-            if (dismissState.currentValue == SwipeToDismissBoxValue.EndToStart) {
+            if (dismissState.currentValue == SwipeToDismissBoxValue.EndToStart || dismissState.currentValue == SwipeToDismissBoxValue.StartToEnd) {
                 coroutine.launch {
                     dismissState.reset()
                 }
@@ -184,8 +186,8 @@ fun TaskLazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(White),
-                    task = "test task",
-                    date = "YYYY MM DD HH:MM pm"
+                    task = it.task,
+                    date = it.date
                 )
             }
         }

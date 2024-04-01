@@ -9,6 +9,12 @@ fun TodoModel.toEntity() = TodoEntity(
     date = date
 )
 
+fun TodoEntity.toModel() = TodoModel(
+    id = id,
+    task = task,
+    date = date
+)
+
 interface Mapper<I, O> {
     fun map(input: I): O
 }

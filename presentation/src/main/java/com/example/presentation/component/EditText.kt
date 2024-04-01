@@ -45,7 +45,7 @@ fun BasicEditText(
         value = inputText,
         onValueChange = {
             inputText = it
-            updateText.invoke(it.toString())
+            updateText.invoke(it.text)
         },
         textStyle = Typography.labelLarge,
         placeholder = {

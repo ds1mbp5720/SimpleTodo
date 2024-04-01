@@ -1,6 +1,8 @@
 package com.example.presentation.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -48,6 +50,56 @@ fun BasicButton(
             style = Typography.labelLarge,
             color = textColor,
         )
+    }
+}
+
+@Composable
+fun BasicRowButton(
+    modifier: Modifier,
+    textStart: String,
+    textCenter: String,
+    textEnd: String,
+    buttonColor: Color = Highlight,
+    textColor: Color = Color.White,
+    textAlign: TextAlign = TextAlign.Center,
+    clickEvent: () -> Unit
+) {
+    Button(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(
+                vertical = 5.dp
+            ),
+        shape = RoundedCornerShape(30.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = buttonColor),
+        onClick = clickEvent
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+            Text(
+                modifier = Modifier,
+                text = textStart,
+                textAlign = textAlign,
+                style = Typography.labelLarge,
+                color = textColor,
+            )
+            Text(
+                modifier = Modifier,
+                text = textCenter,
+                textAlign = textAlign,
+                style = Typography.labelLarge,
+                color = textColor,
+            )
+            Text(
+                modifier = Modifier,
+                text = textEnd,
+                textAlign = textAlign,
+                style = Typography.labelLarge,
+                color = textColor,
+            )
+        }
     }
 }
 

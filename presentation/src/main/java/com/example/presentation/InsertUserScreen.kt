@@ -100,7 +100,7 @@ fun InsertScreen(
             modifier = Modifier,
             text = stringResource(id = R.string.str_btn_register)
         ) {
-            if(uriState != null)
+            //if(uriState != null)
                 onRegisterClick()
         }
     }

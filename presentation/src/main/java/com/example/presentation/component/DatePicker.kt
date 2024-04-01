@@ -1,6 +1,5 @@
 package com.example.presentation.component
 
-import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.presentation.theme.Highlight
 import com.example.presentation.utils.millToDate
+import com.example.presentation.utils.timeString
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,7 +33,12 @@ fun BasicDatePickerButton(
     useTime: Boolean = false,
     updateDate: (String) -> Unit
 ) {
-    var buttonText by remember { mutableStateOf(hint) }
+    //todo edit일때  Button text?
+    
+    var yearText by remember { mutableStateOf(hint) }
+    var monthText by remember { mutableStateOf("") }
+    var dayText by remember { mutableStateOf("") }
+    var timeText by remember { mutableStateOf("") }
     val dateState = rememberDatePickerState(
         yearRange = 2023..2024,
         initialDisplayMode = DisplayMode.Picker,
@@ -43,14 +48,20 @@ fun BasicDatePickerButton(
     val openDateDialog = remember { mutableStateOf(false) }
     val openTimeDialog = remember { mutableStateOf(false) }
 
-    BasicButton(
+    BasicRowButton(
         modifier = modifier
             .border(
                 width = 2.dp,
                 color = Highlight,
                 shape = RoundedCornerShape(30.dp)
             ),
-        text = buttonText,
+        textStart = yearText,
+        textCenter = if (monthText.isEmpty() && dayText.isEmpty()) {
+            ""
+        } else {
+            "$monthText/$dayText"
+        },
+        textEnd = timeText,
         buttonColor = Color.White,
         textColor = Color.Gray,
         textAlign = TextAlign.Start
@@ -65,7 +76,15 @@ fun BasicDatePickerButton(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        buttonText = millToDate(dateState.selectedDateMillis ?: 0)
+                        yearText = millToDate(dateState.selectedDateMillis ?: 0).substring(0, 4)
+                        monthText = millToDate(dateState.selectedDateMillis ?: 0).substring(5, 7)
+                        if (monthText[0] == '0') {
+                            monthText = monthText.replace("0", "")
+                        }
+                        dayText = millToDate(dateState.selectedDateMillis ?: 0).substring(8, 10)
+                        if (dayText[0] == '0') {
+                            dayText = dayText.replace("0", "")
+                        }
                         openDateDialog.value = false
                         if (useTime) {
                             openTimeDialog.value = true
@@ -98,7 +117,8 @@ fun BasicDatePickerButton(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        Log.e("", "날짜 시간 선택 상태 ${timeState.hour} / ${timeState.minute} / ${timeState}")
+                        timeText = timeState.timeString()
+                        updateDate("${yearText.substring(2, 4)}' $monthText/$dayText ${timeState.timeString()}")
                         openTimeDialog.value = false
                     }
                 ) {

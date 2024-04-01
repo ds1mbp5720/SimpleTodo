@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,11 +30,14 @@ enum class TaskScreenType {
 fun WriteTaskScreen(
     mainViewModel: MainViewModel,
     screenType: TaskScreenType,
-    task: String = "",
-    date: String = "",
+    id: Long = 0,
     moveBackStack: () -> Unit,
     @SuppressLint("ModifierParameter") modifier: Modifier = Modifier
 ) {
+
+    val todo = mainViewModel.findTodo(id)
+    var editTask by remember { mutableStateOf(todo?.task ?: "") }
+    var editDate by remember { mutableStateOf(todo?.date ?: "") }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -56,9 +63,9 @@ fun WriteTaskScreen(
                 } else {
                     ""
                 },
-                preText = task,
+                preText = todo?.task ?: "",
                 updateText = {
-
+                    editTask = it
                 }
             )
             Spacer(modifier = Modifier.height(30.dp))
@@ -67,10 +74,11 @@ fun WriteTaskScreen(
                 hint = if (screenType == TaskScreenType.ADD) {
                     stringResource(id = R.string.str_hint_date)
                 } else {
-                    date
+                    todo?.date ?: ""
                 },
+                useTime = true,
                 updateDate = {
-
+                    editDate = it
                 }
             )
         }
@@ -80,9 +88,9 @@ fun WriteTaskScreen(
         ) {
             mainViewModel.insertTodo(
                 todo = TodoModel(
-                    id = 100,
-                    task = "test",
-                    date = "testDate"
+                    id = System.currentTimeMillis(),
+                    task = editTask,
+                    date = editDate
                 )
             )
             moveBackStack()
