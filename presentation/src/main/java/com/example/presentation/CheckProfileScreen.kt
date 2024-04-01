@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -28,7 +29,8 @@ import com.example.presentation.component.BasicTextBodyMedium
 @Composable
 fun CheckProfileScreen(
     mainViewModel: MainViewModel,
-    onStartClick: () -> Unit
+    onStartClick: () -> Unit,
+    onBackClick: () -> Unit
 ) {
     val context = LocalContext.current
     mainViewModel.getUsrInfo(context)
@@ -36,13 +38,17 @@ fun CheckProfileScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(
-                top = 100.dp,
-                bottom = 50.dp
-            ),
+            .padding(bottom = 50.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+        BasicButton(
+            modifier = Modifier
+                .padding(horizontal = 40.dp),
+            text = stringResource(id = R.string.str_btn_insert)
+        ) {
+            onBackClick()
+        }
         GlideImage(
             model = userInfo.value?.image?.toUri(),
             contentDescription = "camera_image",
@@ -54,14 +60,14 @@ fun CheckProfileScreen(
         Column {
             userInfo.value?.name?.let {
                 BasicTextBodyLarge(
-                    modifier = Modifier,
+                    modifier = Modifier.wrapContentWidth(),
                     text = it
                 )
             }
             Spacer(modifier = Modifier.height(30.dp))
             userInfo.value?.birthday?.let {
                 BasicTextBodyMedium(
-                    modifier = Modifier,
+                    modifier = Modifier.wrapContentWidth(),
                     text = it
                 )
             }

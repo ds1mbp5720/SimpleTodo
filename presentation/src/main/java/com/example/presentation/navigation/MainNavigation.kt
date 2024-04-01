@@ -38,16 +38,19 @@ class MainNavController(
     }
     fun navigateToMain(from: NavBackStackEntry) {
         if (from.lifeCycleIsResume()) {
+            navController.popBackStack()
             navController.navigate(MainDestination.MAIN)
         }
     }
     fun navigateToInsertUser(from: NavBackStackEntry) {
         if (from.lifeCycleIsResume()) {
+            navController.popBackStack()
             navController.navigate(MainDestination.INSERT_USER)
         }
     }
     fun navigateToCheckProfile(from: NavBackStackEntry) {
         if (from.lifeCycleIsResume()) {
+            navController.popBackStack()
             navController.navigate(MainDestination.CHECK_PROFILE)
         }
     }

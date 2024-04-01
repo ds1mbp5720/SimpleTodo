@@ -1,5 +1,6 @@
 package com.example.presentation.component
 
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,6 +28,11 @@ import com.example.presentation.theme.Highlight
 import com.example.presentation.utils.millToDate
 import com.example.presentation.utils.timeString
 
+/**
+ * 날짜선택 Compose함수
+ * hint: 최초 text표시
+ * useTime: false -> InsertUser  /  true -> Task 에서 사용
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BasicDatePickerButton(
@@ -38,12 +44,19 @@ fun BasicDatePickerButton(
     emptyModifier: Modifier,
     updateDate: (String) -> Unit
 ) {
-    //todo edit일때  Button text?
-
     var yearText by remember { mutableStateOf(hint) }
     var monthText by remember { mutableStateOf("") }
     var dayText by remember { mutableStateOf("") }
     var timeText by remember { mutableStateOf("") }
+    // edit 일때 text 분할
+    if(useTime && !hint.contains("Date")){
+        val preDate = hint.split(" ")
+        val preMonthAndDay = preDate[1].split("/")
+        yearText = preDate[0]
+        monthText = preMonthAndDay[0]
+        dayText = preMonthAndDay[1]
+        timeText = preDate[2] + " " + preDate[3]
+    }
     val dateState = rememberDatePickerState(
         yearRange = 2023..2024,
         initialDisplayMode = DisplayMode.Picker,

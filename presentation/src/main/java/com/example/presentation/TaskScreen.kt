@@ -28,6 +28,10 @@ enum class TaskScreenType {
     ADD, EDIT
 }
 
+/**
+ * Task 입력 함수
+ * screenType : ADD -> 일정 추가 / EDIT -> 일정 수정
+ */
 @Composable
 fun WriteTaskScreen(
     mainViewModel: MainViewModel,
@@ -57,7 +61,9 @@ fun WriteTaskScreen(
         ) {
             BasicTextTitle(
                 modifier = Modifier,
-                text = if (screenType == TaskScreenType.ADD) stringResource(id = R.string.str_title_add) else stringResource(id = R.string.str_title_edit)
+                text = if (screenType == TaskScreenType.ADD) stringResource(id = R.string.str_title_add) else stringResource(
+                    id = R.string.str_title_edit
+                )
             )
             BasicEditText(
                 modifier = Modifier,
@@ -91,7 +97,7 @@ fun WriteTaskScreen(
                     editDate = it
                 }
             )
-            if(showDateEmpty){
+            if (showDateEmpty) {
                 BasicTextBodySmall(
                     modifier = Modifier
                         .height(30.dp),
@@ -104,18 +110,30 @@ fun WriteTaskScreen(
         }
         BasicButton(
             modifier = Modifier,
-            text = if (screenType == TaskScreenType.ADD) stringResource(id = R.string.str_btn_add) else stringResource(id = R.string.str_btn_edit)
+            text = if (screenType == TaskScreenType.ADD) stringResource(id = R.string.str_btn_add) else stringResource(
+                id = R.string.str_btn_edit
+            )
         ) {
             showTaskEmpty = editTask.isEmpty()
             showDateEmpty = editDate.isEmpty()
-            if(editTask.isNotEmpty() && editDate.isNotEmpty()) {
-                mainViewModel.insertTodo(
-                    todo = TodoModel(
-                        id = System.currentTimeMillis(),
-                        task = editTask,
-                        date = editDate
+            if (editTask.isNotEmpty() && editDate.isNotEmpty()) {
+                if (screenType == TaskScreenType.ADD) {
+                    mainViewModel.insertTodo(
+                        todo = TodoModel(
+                            id = System.currentTimeMillis(),
+                            task = editTask,
+                            date = editDate
+                        )
                     )
-                )
+                } else {
+                    mainViewModel.updateTodo(
+                        todo = TodoModel(
+                            id = id,
+                            task = editTask,
+                            date = editDate
+                        )
+                    )
+                }
                 moveBackStack()
             }
         }

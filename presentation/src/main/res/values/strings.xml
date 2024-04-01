@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="str_btn_register">Register</string>
+    <string name="str_btn_insert">Back To Insert Screen</string>
     <string name="str_hint_name">Name</string>
     <string name="str_empty_name">Name is Empty</string>
     <string name="str_hint_birthday">Birthday</string>

@@ -1,5 +1,7 @@
 package com.example.presentation
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -38,7 +41,6 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.domain.model.TodoModel
 import com.example.presentation.component.BasicTextTitle
-import com.example.presentation.component.RoundImage
 import com.example.presentation.component.TodoItem
 import com.example.presentation.theme.Highlight
 import com.example.presentation.theme.White
@@ -54,6 +56,7 @@ fun MainScreen(
     mainViewModel.getTodoList()
     val todoList = mainViewModel.todoList.observeAsState()
     val userInfo = mainViewModel.userInfo.observeAsState()
+    val activity = LocalContext.current as Activity
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
@@ -105,10 +108,15 @@ fun MainScreen(
                         mainViewModel.deleteTodo(todo)
                         mainViewModel.getTodoList()
                     },
-                    todoList = todoList
+                    todoList = todoList.sortedBy { todo -> todo.date }
                 )
             }
         }
+    }
+    BackHandler(
+        enabled = true
+    ) {
+        activity.finish()
     }
 }
 

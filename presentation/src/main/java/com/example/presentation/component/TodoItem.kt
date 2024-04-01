@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -35,12 +36,15 @@ fun TodoItem(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         BasicTextBodyMedium(
-            modifier = Modifier,
-            text = task
+            modifier = Modifier
+                .weight(2f),
+            text = task,
+            textAlign = TextAlign.Start
         )
         Spacer(modifier = Modifier.width(10.dp))
         BasicTextBodySmall(
-            modifier = Modifier,
+            modifier = Modifier
+                .weight(.8f),
             text = date
         )
     }

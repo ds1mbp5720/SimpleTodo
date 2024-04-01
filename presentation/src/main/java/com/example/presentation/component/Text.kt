@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.presentation.theme.Typography
 
@@ -37,17 +38,21 @@ fun BasicTextBodyLarge(
         color = Color.Gray
     )
 }
+
 @Composable
 fun BasicTextBodyMedium(
     modifier: Modifier,
-    text: String
+    text: String,
+    textAlign: TextAlign = TextAlign.Center
 ) {
     Text(
         modifier = modifier,
         text = text,
-        textAlign = TextAlign.Center,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+        textAlign = textAlign,
         style = Typography.headlineMedium,
-        color = Color.Gray
+        color = Color.Gray,
     )
 }
 

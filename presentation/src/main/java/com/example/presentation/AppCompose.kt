@@ -63,7 +63,8 @@ fun SimpleTodoAppCompose() {
             composable(MainDestination.CHECK_PROFILE) { from ->
                 CheckProfileScreen(
                     mainViewModel = mainViewModel,
-                    onStartClick = { mainNavController.navigateToMain(from) }
+                    onStartClick = { mainNavController.navigateToMain(from) },
+                    onBackClick = { mainNavController.navigateToInsertUser(from) }
                 )
             }
         }
