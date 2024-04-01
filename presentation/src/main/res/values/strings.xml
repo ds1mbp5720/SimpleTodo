@@ -2,7 +2,9 @@
 <resources>
     <string name="str_btn_register">Register</string>
     <string name="str_hint_name">Name</string>
+    <string name="str_empty_name">Name is Empty</string>
     <string name="str_hint_birthday">Birthday</string>
+    <string name="str_empty_birthday">Birthday is Empty</string>
     <string name="str_btn_start">Start</string>
     <string name="str_btn_add">ADD</string>
     <string name="str_hint_task">Task</string>
@@ -11,4 +13,9 @@
     <string name="str_btn_edit">EDIT</string>
     <string name="str_title_edit">EDIT TASK</string>
     <string name="str_list_title">TODO LIST</string>
+    <string name="str_empty_task">Task is Empty</string>
+    <string name="str_empty_date">Date is Empty</string>
+    <string name="str_next">NEXT</string>
+    <string name="str_confirm">OK</string>
+    <string name="str_cancel">CANCEL</string>
 </resources>

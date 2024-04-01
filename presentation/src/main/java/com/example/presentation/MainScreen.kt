@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -25,11 +26,16 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.domain.model.TodoModel
 import com.example.presentation.component.BasicTextTitle
 import com.example.presentation.component.RoundImage
@@ -38,6 +44,7 @@ import com.example.presentation.theme.Highlight
 import com.example.presentation.theme.White
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun MainScreen(
     mainViewModel: MainViewModel = viewModel(),
@@ -46,6 +53,7 @@ fun MainScreen(
 ) {
     mainViewModel.getTodoList()
     val todoList = mainViewModel.todoList.observeAsState()
+    val userInfo = mainViewModel.userInfo.observeAsState()
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
@@ -80,10 +88,13 @@ fun MainScreen(
                     modifier = Modifier,
                     text = stringResource(id = R.string.str_list_title)
                 )
-                RoundImage(
-                    modifier = Modifier,
-                    imageId = R.drawable.profile,
-                    size = 80
+                GlideImage(
+                    model = userInfo.value?.image?.toUri(),
+                    contentDescription = "camera_image",
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .size(80.dp)
+                        .clip(CircleShape)
                 )
             }
             Spacer(modifier = Modifier.height(20.dp))

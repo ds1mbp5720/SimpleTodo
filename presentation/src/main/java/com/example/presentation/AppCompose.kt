@@ -1,6 +1,7 @@
 package com.example.presentation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -15,9 +16,12 @@ fun SimpleTodoAppCompose() {
     val mainNavController = rememberMainNavController()
     SimpleTodoAppTheme {
         val mainViewModel: MainViewModel = viewModel()
+        val context = LocalContext.current
+        mainViewModel.getUsrInfo(context)
         NavHost(
             navController = mainNavController.navController,
-            startDestination = MainDestination.INSERT_USER
+            startDestination = if (mainViewModel.userInfo.value?.name?.isEmpty() == true) MainDestination.INSERT_USER
+            else MainDestination.CHECK_PROFILE
         ) {
             composable(MainDestination.MAIN) { from ->
                 MainScreen(
@@ -52,11 +56,13 @@ fun SimpleTodoAppCompose() {
             }
             composable(MainDestination.INSERT_USER) { from ->
                 InsertScreen(
+                    mainViewModel = mainViewModel,
                     onRegisterClick = { mainNavController.navigateToCheckProfile(from) }
                 )
             }
             composable(MainDestination.CHECK_PROFILE) { from ->
                 CheckProfileScreen(
+                    mainViewModel = mainViewModel,
                     onStartClick = { mainNavController.navigateToMain(from) }
                 )
             }

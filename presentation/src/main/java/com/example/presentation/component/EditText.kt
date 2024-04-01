@@ -1,7 +1,9 @@
 package com.example.presentation.component
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -25,6 +27,9 @@ fun BasicEditText(
     modifier: Modifier,
     hint: String,
     preText: String = "",
+    empty: Boolean = false,
+    emptyText: String,
+    emptyModifier: Modifier,
     updateText: (String) -> Unit
 ) {
     var inputText by remember { mutableStateOf(TextFieldValue(preText)) }
@@ -56,4 +61,13 @@ fun BasicEditText(
             )
         }
     )
+    if(empty){
+        BasicTextBodySmall(
+            modifier = emptyModifier,
+            text = emptyText,
+            color = Color.Red
+        )
+    } else {
+        Spacer(modifier = emptyModifier)
+    }
 }

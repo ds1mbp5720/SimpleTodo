@@ -1,13 +1,13 @@
 package com.example.presentation
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -36,15 +36,20 @@ import com.example.presentation.utils.getImageUri
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun InsertScreen(
+    mainViewModel: MainViewModel,
     onRegisterClick: () -> Unit
 ) {
     val context = LocalContext.current
     var uriState by remember { mutableStateOf<Uri?>(null) }
+    var editName by remember { mutableStateOf("") }
+    var editBirthday by remember { mutableStateOf("") }
+    var showNameEmpty by remember { mutableStateOf(false) }
+    var showBirthdayEmpty by remember { mutableStateOf(false) }
     val cameraPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicturePreview(),
         onResult = { tackPicture ->
-            if(tackPicture != null){
-                uriState = getImageUri(context, tackPicture,"camera")
+            if (tackPicture != null) {
+                uriState = getImageUri(context, tackPicture, "camera")
             }
         }
     )
@@ -59,7 +64,7 @@ fun InsertScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        if(uriState == null){
+        if (uriState == null) {
             RoundIconButton(
                 modifier = Modifier,
                 imageId = R.drawable.photo_camera_white,
@@ -83,16 +88,23 @@ fun InsertScreen(
             BasicEditText(
                 modifier = Modifier,
                 hint = stringResource(id = R.string.str_hint_name),
+                empty = showNameEmpty,
+                emptyText = stringResource(id = R.string.str_empty_name),
+                emptyModifier = Modifier
+                    .height(30.dp),
                 updateText = {
-
+                    editName = it
                 }
             )
-            Spacer(modifier = Modifier.height(30.dp))
             BasicDatePickerButton(
                 modifier = Modifier,
                 hint = stringResource(id = R.string.str_hint_birthday),
+                empty = showBirthdayEmpty,
+                emptyText = stringResource(id = R.string.str_empty_birthday),
+                emptyModifier = Modifier
+                    .height(30.dp),
                 updateDate = {
-
+                    editBirthday = it
                 }
             )
         }
@@ -100,8 +112,22 @@ fun InsertScreen(
             modifier = Modifier,
             text = stringResource(id = R.string.str_btn_register)
         ) {
-            //if(uriState != null)
+            showNameEmpty = editName.isEmpty()
+            showBirthdayEmpty = editBirthday.isEmpty()
+            if (uriState == null) {
+                Toast.makeText(context, "need picture", Toast.LENGTH_SHORT).show()
+            }
+            if (uriState != null && editName.isNotEmpty() && editBirthday.isNotEmpty()){
+                uriState?.let {
+                    mainViewModel.setUserInfo(
+                        context = context,
+                        uri = it,
+                        name = editName,
+                        birthday = editBirthday
+                    )
+                }
                 onRegisterClick()
+            }
         }
     }
 }

@@ -19,8 +19,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.presentation.R
 import com.example.presentation.theme.Highlight
 import com.example.presentation.utils.millToDate
 import com.example.presentation.utils.timeString
@@ -31,10 +33,13 @@ fun BasicDatePickerButton(
     modifier: Modifier,
     hint: String,
     useTime: Boolean = false,
+    empty: Boolean = false,
+    emptyText: String,
+    emptyModifier: Modifier,
     updateDate: (String) -> Unit
 ) {
     //todo edit일때  Button text?
-    
+
     var yearText by remember { mutableStateOf(hint) }
     var monthText by remember { mutableStateOf("") }
     var dayText by remember { mutableStateOf("") }
@@ -68,6 +73,15 @@ fun BasicDatePickerButton(
     ) {
         openDateDialog.value = true
     }
+    if (empty) {
+        BasicTextBodySmall(
+            modifier = emptyModifier,
+            text = emptyText,
+            color = Color.Red
+        )
+    } else {
+        Spacer(modifier = emptyModifier)
+    }
     if (openDateDialog.value) {
         DatePickerDialog(
             onDismissRequest = {
@@ -88,10 +102,15 @@ fun BasicDatePickerButton(
                         openDateDialog.value = false
                         if (useTime) {
                             openTimeDialog.value = true
+                        } else {
+                            updateDate("${yearText.substring(0, 4)}.$monthText.$dayText")
                         }
                     }
                 ) {
-                    Text("Next")
+                    if (useTime)
+                        Text(stringResource(id = R.string.str_next))
+                    else
+                        Text(stringResource(id = R.string.str_confirm))
                 }
             },
             dismissButton = {
@@ -100,7 +119,7 @@ fun BasicDatePickerButton(
                         openDateDialog.value = false
                     }
                 ) {
-                    Text("CANCEL")
+                    Text(stringResource(id = R.string.str_cancel))
                 }
             }
         ) {
@@ -118,11 +137,18 @@ fun BasicDatePickerButton(
                 TextButton(
                     onClick = {
                         timeText = timeState.timeString()
-                        updateDate("${yearText.substring(2, 4)}' $monthText/$dayText ${timeState.timeString()}")
+                        updateDate(
+                            "${
+                                yearText.substring(
+                                    2,
+                                    4
+                                )
+                            }' $monthText/$dayText ${timeState.timeString()}"
+                        )
                         openTimeDialog.value = false
                     }
                 ) {
-                    Text("OK")
+                    Text(stringResource(id = R.string.str_confirm))
                 }
             },
             dismissButton = {
@@ -131,7 +157,7 @@ fun BasicDatePickerButton(
                         openTimeDialog.value = false
                     }
                 ) {
-                    Text("CANCEL")
+                    Text(stringResource(id = R.string.str_cancel))
                 }
             }
         ) {

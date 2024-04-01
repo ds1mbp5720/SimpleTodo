@@ -54,13 +54,14 @@ fun BasicTextBodyMedium(
 @Composable
 fun BasicTextBodySmall(
     modifier: Modifier,
-    text: String
+    text: String,
+    color: Color = Color.Gray
 ) {
     Text(
         modifier = modifier,
         text = text,
         textAlign = TextAlign.Center,
         style = Typography.labelSmall,
-        color = Color.Gray
+        color = color
     )
 }

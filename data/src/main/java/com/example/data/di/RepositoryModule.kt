@@ -1,7 +1,9 @@
 package com.example.data.di
 
 import com.example.data.repository.TodoRepositoryImpl
+import com.example.data.repository.UserRepositoryImpl
 import com.example.domain.repository.TodoRepository
+import com.example.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,4 +16,8 @@ abstract class RepositoryModule {
     abstract fun bindsTodoRepository(
         todoRepositoryImpl: TodoRepositoryImpl
     ): TodoRepository
+    @Binds
+    abstract fun bindsUserRepository(
+        userRepositoryImpl: UserRepositoryImpl
+    ): UserRepository
 }
